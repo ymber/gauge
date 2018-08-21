@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "luastuff.h"
+
 typedef struct {
     xcb_connection_t *connection;
     xcb_screen_t *screen;
@@ -67,6 +69,7 @@ int main()
     cairo_t *cairo_context = cairo_create(cairo_surface);
 
     draw(cairo_surface, cairo_context, &window);
+    luastuff();
 
     pause();
 
