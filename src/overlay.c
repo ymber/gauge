@@ -7,15 +7,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "overlay.h"
 #include "luastuff.h"
 #include "config.h"
-
-typedef struct {
-    xcb_connection_t *connection;
-    xcb_screen_t *screen;
-    xcb_window_t drawable;
-    xcb_visualtype_t *visual;
-} Window;
 
 xcb_visualtype_t *find_visual(xcb_connection_t *connection, xcb_visualid_t visual)
 {
