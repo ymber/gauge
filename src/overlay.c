@@ -1,11 +1,14 @@
 #include <xcb/xcb.h>
 #include <cairo.h>
 #include <cairo-xcb.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 #include <stdio.h>
 #include <unistd.h>
 
 #include "luastuff.h"
+#include "config.h"
 
 typedef struct {
     xcb_connection_t *connection;
@@ -69,7 +72,11 @@ int main()
     cairo_t *cairo_context = cairo_create(cairo_surface);
 
     draw(cairo_surface, cairo_context, &window);
-    luastuff();
+
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
+    load_settings(L, "config.lua");
+    luastuff(L);
 
     pause();
 
