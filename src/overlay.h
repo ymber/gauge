@@ -13,6 +13,6 @@ typedef struct {
 
 xcb_visualtype_t *find_visual(xcb_connection_t *connection, xcb_visualid_t visual);
 Window create_window();
-void draw(cairo_surface_t* surface, cairo_t *context, Window *window);
+void draw(cairo_t *context, Window *window);
 
 #endif

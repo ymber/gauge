@@ -51,7 +51,7 @@ Window create_window()
     return window_data;
 }
 
-void draw(cairo_surface_t* surface, cairo_t *context, Window *window) {
+void draw(cairo_t *context, Window *window) {
     cairo_set_source_rgba(context, 1, 0, 0, 1);
     cairo_paint(context);
     xcb_flush(window->connection);
@@ -64,7 +64,11 @@ int main()
                                      window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
     cairo_t *cairo_context = cairo_create(cairo_surface);
 
-    draw(cairo_surface, cairo_context, &window);
+    draw(cairo_context, &window);
+
+    for (int i = 0; i < sizeof(call)/sizeof(call[0]); ++i) {
+        (*call[i])(cairo_context, &window);
+    }
 
     pause();
 

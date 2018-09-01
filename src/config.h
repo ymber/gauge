@@ -1,6 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <cairo.h>
+
+#include "overlay.h"
+#include "modules/ring.h"
+
 typedef struct {
     int size[2];
     int bg_rgba[4];
@@ -13,6 +18,10 @@ Settings_t settings = {
     {0, 0, 1, 1},
     {1, 0, 1, 1},
     1
+};
+
+void (*call[1])(cairo_t*, Window*) = {
+    draw_ring
 };
 
 #endif
