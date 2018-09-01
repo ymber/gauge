@@ -8,7 +8,6 @@
 #include <unistd.h>
 
 #include "overlay.h"
-#include "luastuff.h"
 #include "config.h"
 
 xcb_visualtype_t *find_visual(xcb_connection_t *connection, xcb_visualid_t visual)
@@ -66,11 +65,6 @@ int main()
     cairo_t *cairo_context = cairo_create(cairo_surface);
 
     draw(cairo_surface, cairo_context, &window);
-
-    lua_State *L = luaL_newstate();
-    luaL_openlibs(L);
-    load_settings(L, "config.lua");
-    luastuff(L);
 
     pause();
 
