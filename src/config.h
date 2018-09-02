@@ -9,7 +9,7 @@
 typedef struct {
     int size_x;
     int size_y;
-    int frequency;
+    double frequency;
 } Settings_t;
 
 Settings_t settings = {

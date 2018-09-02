@@ -66,11 +66,12 @@ int main()
 
     draw(cairo_context, &window);
 
-    for(int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
-        (*call[i])(cairo_context, &window);
+    for(int j = 0; j<5; ++j) {
+        for(int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
+            (*call[i])(cairo_context, &window);
+        }
+        sleep(1/settings.frequency);
     }
-
-    pause();
 
     cairo_destroy(cairo_context);
     xcb_disconnect(window.connection);
