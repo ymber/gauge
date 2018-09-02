@@ -5,7 +5,7 @@
 #include "data_curves.h"
 #include "../overlay.h"
 
-Data_Curve_t rings[2] = {
+Data_Curve_t rings[1] = {
     {
         get_seconds,
         60,
