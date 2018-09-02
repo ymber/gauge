@@ -1,0 +1,5 @@
+# Development environment files
+.vscode/
+
+# Build files
+build/
