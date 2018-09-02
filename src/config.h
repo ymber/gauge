@@ -4,7 +4,7 @@
 #include <cairo.h>
 
 #include "overlay.h"
-#include "modules/ring.h"
+#include "modules/data_curves.h"
 
 typedef struct {
     int size[2];
@@ -21,7 +21,7 @@ Settings_t settings = {
 };
 
 void (*call[1])(cairo_t*, Window*) = {
-    draw_ring
+    draw_rings
 };
 
 #endif
