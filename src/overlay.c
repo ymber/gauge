@@ -42,8 +42,7 @@ Window create_window()
     uint32_t mask = XCB_CW_OVERRIDE_REDIRECT;
     uint32_t values [1] = {1};
     xcb_create_window(window_data.connection, window_data.screen->root_depth, window_data.drawable,
-                      window_data.screen->root, 0, 0, window_data.screen->width_in_pixels,
-                      window_data.screen->height_in_pixels, 0,
+                      window_data.screen->root, 0, 0, settings.size_x, settings.size_y, 0,
                       XCB_WINDOW_CLASS_INPUT_OUTPUT, window_data.screen->root_visual, mask, values);
     xcb_map_window(window_data.connection, window_data.drawable);
     xcb_flush(window_data.connection);

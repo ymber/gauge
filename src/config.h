@@ -7,16 +7,14 @@
 #include "modules/data_curves.h"
 
 typedef struct {
-    int size[2];
-    int bg_rgba[4];
-    int fg_rgba[4];
+    int size_x;
+    int size_y;
     int frequency;
 } Settings_t;
 
 Settings_t settings = {
-    {1920, 1080},
-    {0, 0, 1, 1},
-    {1, 0, 1, 1},
+    1024,
+    768,
     1
 };
 
