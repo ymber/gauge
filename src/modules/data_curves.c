@@ -20,11 +20,13 @@ Data_Curve_t rings[1] = {
     }
 };
 
-double get_coverage(Data_Curve_t *arc) {
+double get_coverage(Data_Curve_t *arc)
+{
     return arc->data_fnc() / arc->max;
 }
 
-void draw_ring(cairo_t *context, Data_Curve_t arc) {
+void draw_ring(cairo_t *context, Data_Curve_t arc)
+{
     double filled_arc_length = (arc.end_angle - arc.start_angle) * get_coverage(&arc);
 
     // Draw arc background
@@ -41,7 +43,7 @@ void draw_ring(cairo_t *context, Data_Curve_t arc) {
 
 void draw_rings(cairo_t *context, Window *window)
 {
-    for (int i = 0; i < sizeof(rings)/sizeof(rings[0]); ++i) {
+    for(int i = 0; i < sizeof(rings) / sizeof(rings[0]); ++i) {
         draw_ring(context, rings[i]);
     }
     xcb_flush(window->connection);
