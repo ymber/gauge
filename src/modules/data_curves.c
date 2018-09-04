@@ -46,5 +46,4 @@ void draw_rings(cairo_t *context, Window *window)
     for(int i = 0; i < sizeof(rings) / sizeof(rings[0]); ++i) {
         draw_ring(context, rings[i]);
     }
-    xcb_flush(window->connection);
 }

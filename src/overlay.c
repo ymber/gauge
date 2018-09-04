@@ -61,6 +61,7 @@ int main()
         for(int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
             (*call[i])(cairo_context, &window);
         }
+        xcb_flush(window.connection);
         sleep(1 / settings.frequency);
     }
 
