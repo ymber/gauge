@@ -4,6 +4,7 @@
 #include <cairo.h>
 
 #include "overlay.h"
+#include "modules/background.h"
 #include "modules/data_curves.h"
 
 typedef struct {
@@ -18,7 +19,8 @@ Settings_t settings = {
     1
 };
 
-void (*call[1])(cairo_t*, Window*) = {
+void (*call[2])(cairo_t*, Window*) = {
+    draw_background,
     draw_rings
 };
 
