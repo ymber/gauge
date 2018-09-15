@@ -65,3 +65,23 @@ double get_cpu_utilization(char *cpuN) {
     
 	return working / (idle + working);
 }
+
+double get_memory_usage() {
+	char *str = NULL;
+    size_t len = 0;
+	FILE *fp = fopen("/proc/meminfo", "r");
+	getline(&str, &len, fp);
+	char *memtotal_line = malloc(strlen(str));
+	strcpy(memtotal_line, str);
+	getline(&str, &len, fp);
+	char *memfree_line = malloc(strlen(str));
+	strcpy(memfree_line, str);
+	free(str);
+
+	strtok(memtotal_line, " ");
+	double memtotal = strtol(strtok(NULL, " "), NULL, 10);
+	strtok(memfree_line, " ");
+	double memfree = strtol(strtok(NULL, " "), NULL, 10);
+
+	return memfree / memtotal;
+}
