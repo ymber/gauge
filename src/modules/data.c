@@ -15,9 +15,9 @@ struct tm *get_time()
     return bd_time;
 }
 
-double get_seconds()
+int get_seconds()
 {
-    return (double)get_time(NULL)->tm_sec;
+    return get_time()->tm_sec;
 }
 
 double get_cpu_utilization(char *cpuN) {
