@@ -5,6 +5,6 @@
 
 #include "../overlay.h"
 
-void draw_background(cairo_t *context, Window *window);
+void draw_background(cairo_t *context);
 
 #endif

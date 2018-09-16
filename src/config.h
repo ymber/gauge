@@ -19,7 +19,7 @@ Settings_t settings = {
     1
 };
 
-void (*call[2])(cairo_t*, Window*) = {
+void (*call[2])(cairo_t*) = {
     draw_background,
     draw_rings
 };

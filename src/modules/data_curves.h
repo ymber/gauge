@@ -24,6 +24,6 @@ typedef struct {
     float end_angle;
 } Data_Curve_t;
 
-void draw_rings(cairo_t *context, Window *window);
+void draw_rings(cairo_t *context);
 
 #endif

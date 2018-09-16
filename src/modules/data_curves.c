@@ -41,7 +41,7 @@ void draw_ring(cairo_t *context, Data_Curve_t arc)
     cairo_stroke(context);
 }
 
-void draw_rings(cairo_t *context, Window *window)
+void draw_rings(cairo_t *context)
 {
     for(int i = 0; i < sizeof(rings) / sizeof(rings[0]); ++i) {
         draw_ring(context, rings[i]);
