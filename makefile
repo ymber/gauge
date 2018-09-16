@@ -1,5 +1,5 @@
-CC=gcc
-CFLAGS=-Wall -c $(INCLUDES)
+CC=clang
+CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
 LDFLAGS=$(LIBS)
 
 INCLUDES=`pkg-config --cflags xcb` `pkg-config --cflags cairo`
