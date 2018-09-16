@@ -62,7 +62,7 @@ int main()
         cairo_set_operator(cairo_context, CAIRO_OPERATOR_CLEAR);
         cairo_paint(cairo_context);
         cairo_restore(cairo_context);
-        for(int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
+        for(unsigned int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
             (*call[i])(cairo_context, &window);
         }
         xcb_flush(window.connection);
