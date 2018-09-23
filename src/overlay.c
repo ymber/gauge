@@ -1,8 +1,6 @@
 #include <xcb/xcb.h>
 #include <cairo.h>
 #include <cairo-xcb.h>
-#include <lauxlib.h>
-#include <lualib.h>
 
 #include <stdio.h>
 #include <unistd.h>
