@@ -2,7 +2,6 @@
 #define DATA_CURVES_H
 
 #include <cairo.h>
-#include "../overlay.h"
 
 typedef struct {
     double r;
