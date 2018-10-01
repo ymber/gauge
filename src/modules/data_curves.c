@@ -4,6 +4,7 @@
 #include <cairo.h>
 
 #include "data.h"
+#include "display.h"
 #include "data_curves.h"
 #include "../overlay.h"
 
@@ -102,22 +103,6 @@ void cpu_rings(cairo_t *context) {
         double coverage = cpu_usage / cpu_rings[i].max;
         draw_ring(context, &cpu_rings[i], coverage);
     }
-}
-
-void draw_ring(cairo_t *context, Data_Curve_t *arc, double coverage)
-{
-    double filled_arc_length = (arc->end_angle - arc->start_angle) * coverage;
-
-    // Draw arc background
-    cairo_set_source_rgba(context, arc->bg_rgba.r, arc->bg_rgba.g, arc->bg_rgba.b, arc->bg_rgba.a);
-    cairo_arc(context, arc->x, arc->y, arc->radius, arc->start_angle, arc->end_angle);
-    cairo_set_line_width(context, arc->thickness);
-    cairo_stroke(context);
-
-    // Draw arc foreground
-    cairo_set_source_rgba(context, arc->fg_rgba.r, arc->fg_rgba.g, arc->fg_rgba.b, arc->fg_rgba.a);
-    cairo_arc(context, arc->x, arc->y, arc->radius, arc->start_angle, arc->start_angle + filled_arc_length);
-    cairo_stroke(context);
 }
 
 void draw_rings(cairo_t *context)
