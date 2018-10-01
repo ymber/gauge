@@ -6,6 +6,7 @@
 #include "overlay.h"
 #include "modules/background.h"
 #include "modules/data_curves.h"
+#include "modules/display.h"
 
 typedef struct {
     int size_x;
@@ -19,9 +20,10 @@ Settings_t settings = {
     1
 };
 
-void (*call[2])(cairo_t*) = {
+void (*call[3])(cairo_t*) = {
     draw_background,
-    draw_rings
+    draw_rings,
+    draw_chart
 };
 
 #endif
