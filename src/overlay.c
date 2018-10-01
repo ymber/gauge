@@ -55,7 +55,7 @@ int main()
                                      window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
     cairo_t *cairo_context = cairo_create(cairo_surface);
 
-    for(int j = 0; j < 5; ++j) {
+    for(int j = 0; j < 300; ++j) {
         cairo_save(cairo_context);
         cairo_set_operator(cairo_context, CAIRO_OPERATOR_CLEAR);
         cairo_paint(cairo_context);
