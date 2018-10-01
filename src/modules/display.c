@@ -17,24 +17,3 @@ void line_chart(cairo_t *context, Line_Chart_t *chart, Point_set_t *point_set) {
     }
     cairo_stroke(context);
 }
-
-void draw_chart(cairo_t *context) {
-    Line_Chart_t chart1 = {
-        100,
-        500,
-        100,
-        200,
-        700,
-        50
-    };
-    double points[30];
-    srand(time(NULL));
-    for (int i = 0; i < 30; ++i) {
-        points[i] = rand() % 101;
-    }
-    Point_set_t pointset = {
-        30,
-        points
-    };
-    line_chart(context, &chart1, &pointset);
-}

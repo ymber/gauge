@@ -20,10 +20,9 @@ Settings_t settings = {
     1
 };
 
-void (*call[3])(cairo_t*) = {
+void (*call[2])(cairo_t*) = {
     draw_background,
-    draw_rings,
-    draw_chart
+    draw_rings
 };
 
 #endif

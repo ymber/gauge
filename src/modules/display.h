@@ -18,6 +18,5 @@ typedef struct {
 } Point_set_t;
 
 void line_chart(cairo_t *context, Line_Chart_t *chart, Point_set_t *point_set);
-void draw_chart(cairo_t *context);
 
 #endif
