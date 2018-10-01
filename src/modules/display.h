@@ -12,7 +12,12 @@ typedef struct {
     int point_num;
 } Line_Chart_t;
 
-void line_chart(cairo_t *context, Line_Chart_t *chart, double *points);
+typedef struct {
+    int size;
+    double *points;
+} Point_set_t;
+
+void line_chart(cairo_t *context, Line_Chart_t *chart, Point_set_t *point_set);
 void draw_chart(cairo_t *context);
 
 #endif
