@@ -65,18 +65,29 @@ double get_memory_usage() {
 	char *str = NULL;
     size_t len = 0;
 	FILE *fp = fopen("/proc/meminfo", "r");
-	getline(&str, &len, fp);
-	char *memtotal_line = malloc(strlen(str));
-	strcpy(memtotal_line, str);
-	getline(&str, &len, fp);
-	char *memfree_line = malloc(strlen(str));
-	strcpy(memfree_line, str);
-	free(str);
 
-	strtok(memtotal_line, " ");
-	double memtotal = strtol(strtok(NULL, " "), NULL, 10);
-	strtok(memfree_line, " ");
-	double memfree = strtol(strtok(NULL, " "), NULL, 10);
+	// Stores values for MemTotal, MemFree, Buffers, and Cache
+	int mem_vals[4];
 
-	return memfree / memtotal;
+	int index = 0;
+	for (int i = 0; i < 5; ++i) {
+		// Don't store MemAvailable line
+		if (i == 2) {
+			getline(&str, &len, fp);
+			continue;
+		}
+		getline(&str, &len, fp);
+		strtok(str, " ");
+		mem_vals[index] = strtol(strtok(NULL, " "), NULL, 10);
+		printf("%d %d\n", index, mem_vals[index]);
+		++index;
+	}
+
+    fclose(fp);
+    free(str);
+
+	double used_fraction = (double)(mem_vals[0] - mem_vals[1] - mem_vals[2] - mem_vals[3]) / (double)mem_vals[0];
+	printf("%f\n", used_fraction);
+
+	return used_fraction;
 }
