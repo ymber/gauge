@@ -86,7 +86,6 @@ double get_memory_usage() {
     free(str);
 
     double used_fraction = (double)(mem_vals[0] - mem_vals[1] - mem_vals[2] - mem_vals[3]) / (double)mem_vals[0];
-    printf("%f\n", used_fraction);
 
     return used_fraction;
 }
