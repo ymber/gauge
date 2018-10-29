@@ -11,10 +11,11 @@
 
 #define M_PI 3.14159265358979323846
 
-void (*ring_fncs[3])(cairo_t *context) = {
+void (*ring_fncs[4])(cairo_t *context) = {
     seconds_ring,
     memory_ring,
-    cpu_rings
+    cpu_rings,
+    disk_usage_rings
 };
 
 void seconds_ring(cairo_t *context) {
@@ -100,6 +101,40 @@ void cpu_rings(cairo_t *context) {
     for (int i = 0; i < 4; ++i) {
         double coverage = system_resources.cpu_perc[i] / cpu_rings[i].max;
         draw_ring(context, &cpu_rings[i], coverage);
+    }
+
+}
+
+void disk_usage_rings(cairo_t *context) {
+    Data_Curve_t disk_rings[2] = {
+        {
+            1,
+            {1, 1, 1, 0.3},
+            {1, 1, 1, 0.6},
+            110,
+            160,
+            105,
+            5,
+            -(17.0/36.0) * M_PI,
+            (1.0/6.0) * M_PI
+        },
+        {
+            1,
+            {1, 1, 1, 0.3},
+            {1, 1, 1, 0.6},
+            110,
+            160,
+            105,
+            5,
+            -(7.0/6.0) * M_PI,
+            -(19.0/36.0) * M_PI
+        }
+    };
+    struct statfs stats[2] = {get_disk_stats("/"), get_disk_stats("/home")};
+    for(int i = 0; i < 2; ++i) {
+        int disk_used = stats[i].f_blocks - stats[i].f_bfree;
+        double coverage = (double)disk_used / (double)stats[i].f_blocks;
+        draw_ring(context, &disk_rings[i], coverage);
     }
 }
 

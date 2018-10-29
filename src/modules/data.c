@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <string.h>
 
+#include <sys/vfs.h>
+
 struct tm *get_time()
 {
     time_t current_time;
@@ -76,4 +78,12 @@ double get_memory_usage() {
     double used_fraction = (double)(mem_vals[0] - mem_vals[1] - mem_vals[2] - mem_vals[3]) / (double)mem_vals[0];
 
     return used_fraction;
+}
+
+struct statfs get_disk_stats(char *disk) {
+    struct statfs stats;
+    if(statfs(disk, &stats) < 0) {
+        fprintf(stderr, "failed to get stats for %s\n", disk);
+    }
+    return stats;
 }
