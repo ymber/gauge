@@ -72,6 +72,7 @@ double get_memory_usage() {
     fclose(fp);
     free(str);
 
+    // Do not count cache or buffers as used memory as in free
     double used_fraction = (double)(mem_vals[0] - mem_vals[1] - mem_vals[2] - mem_vals[3]) / (double)mem_vals[0];
 
     return used_fraction;

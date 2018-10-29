@@ -10,7 +10,7 @@ double get_cpu_utilization(int* stats1, int * stats2) {
     int stats_diff[10];
     int total = 0;
     int working = 0;
-    
+
     for(int i = 0; i < 10; ++i) {
         // stats1 may be a later snapshot than stats2 so use absolute values
         stats_diff[i] = abs(stats2[i] - stats1[i]);
