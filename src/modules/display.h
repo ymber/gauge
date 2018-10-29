@@ -4,20 +4,22 @@
 #include <cairo.h>
 
 typedef struct {
+    double r;
+    double g;
+    double b;
+    double a;
+} RGBA_t;
+
+typedef struct {
     double max;
     int x;
     int y;
     int start_x;
     int start_y;
     int point_num;
+    RGBA_t rgba;
+    int line_width;
 } Line_Chart_t;
-
-typedef struct {
-    double r;
-    double g;
-    double b;
-    double a;
-} RGBA_t;
 
 typedef struct {
     double max;

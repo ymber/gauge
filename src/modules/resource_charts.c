@@ -16,7 +16,9 @@ void cpu_chart(cairo_t *context) {
         200,
         300,
         300,
-        40
+        40,
+        {1, 1, 1, 0.6},
+        3
     };
 
     static double points[40] = {0};

@@ -5,7 +5,8 @@
 #include "display.h"
 
 void line_chart(cairo_t *context, Line_Chart_t *chart, double *point_set) {
-    cairo_set_line_width(context, 2);
+    cairo_set_source_rgba(context, chart->rgba.r, chart->rgba.g, chart->rgba.b, chart->rgba.a);
+    cairo_set_line_width(context, chart->line_width);
     int point_distance = chart->x / chart->point_num;
     for (int i = 0; i < chart->point_num; ++i) {
         int point_height = chart->start_y - (point_set[i] * (chart->y / chart->max));
