@@ -35,6 +35,11 @@ void update_cpu_data() {
         get_cpu_stats(cpu_string, stats[clock][i]);
         system_resources.cpu_perc[i] = get_cpu_utilization(stats[0][i], stats[1][i]);
     }
+
+    static int core_avg_stats[2][10] = {0};
+    get_cpu_stats("cpu", core_avg_stats[clock]);
+    system_resources.cpu_avg_perc = get_cpu_utilization(core_avg_stats[0], core_avg_stats[1]);
+
     clock = !clock;
 }
 

@@ -5,6 +5,7 @@
 
 typedef struct {
     double cpu_perc[16];
+    double cpu_avg_perc;
 } Resource_Data_t;
 
 Resource_Data_t system_resources;
