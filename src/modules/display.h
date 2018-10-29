@@ -13,11 +13,6 @@ typedef struct {
 } Line_Chart_t;
 
 typedef struct {
-    int size;
-    double *points;
-} Point_set_t;
-
-typedef struct {
     double r;
     double g;
     double b;
@@ -36,7 +31,7 @@ typedef struct {
     double end_angle;
 } Data_Curve_t;
 
-void line_chart(cairo_t *context, Line_Chart_t *chart, Point_set_t *point_set);
+void line_chart(cairo_t *context, Line_Chart_t *chart, double *point_set);
 void draw_ring(cairo_t *context, Data_Curve_t *arc, double coverage);
 
 #endif

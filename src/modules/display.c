@@ -4,10 +4,11 @@
 
 #include "display.h"
 
-void line_chart(cairo_t *context, Line_Chart_t *chart, Point_set_t *point_set) {
+void line_chart(cairo_t *context, Line_Chart_t *chart, double *point_set) {
+    cairo_set_line_width(context, 2);
     int point_distance = chart->x / chart->point_num;
-    for (int i = 0; i < point_set->size; ++i) {
-        int point_height = chart->start_y - (point_set->points[i] * (chart->y / chart->max));
+    for (int i = 0; i < chart->point_num; ++i) {
+        int point_height = chart->start_y - (point_set[i] * (chart->y / chart->max));
         if (i == 0) {
             cairo_move_to(context, chart->start_x + i * point_distance, point_height);
         }
