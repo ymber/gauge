@@ -15,7 +15,7 @@ struct tm *get_time()
     return bd_time;
 }
 
-double get_cpu_utilization(char *cpuN) {
+void get_cpu_stats(char *cpuN, int *stats) {
     char *str = NULL;
     size_t len = 0;
     char *token;
@@ -32,33 +32,20 @@ double get_cpu_utilization(char *cpuN) {
         }
         else if (token == NULL) {
             fprintf(stderr, "no cpuid %s found in /proc/stat\n", cpuN);
-            fclose(fp);
             free(str);
+            fclose(fp);
         }
     }
 
     token = strtok(stat_line, " ");
-    double idle = 0;
-    double working = 0;
-    int i = 0;
-    while (token != NULL) {
+    // 10 time values given by kernels >2.6.33
+    for(int i = 0; i < 10; ++i) {
+        // discard cpuN token
         token = strtok(NULL, " ");
-        if (token == NULL) {
-            break;
-        }
-        // add idle and iowait figures to idle time
-        else if (i == 3 || i == 4) {
-            idle += strtol(token, NULL, 10);
-        }
-        // add all other figures to working time
-        else {
-            working += strtol(token, NULL, 10);
-        }
-        ++i;
+        stats[i] = strtol(token, NULL, 10);
     }
-    free(stat_line);
 
-    return working / (idle + working);
+    free(stat_line);
 }
 
 double get_memory_usage() {

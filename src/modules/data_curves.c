@@ -4,6 +4,7 @@
 #include <cairo.h>
 
 #include "data.h"
+#include "status.h"
 #include "display.h"
 #include "data_curves.h"
 #include "../overlay.h"
@@ -97,10 +98,7 @@ void cpu_rings(cairo_t *context) {
         }
     };
     for (int i = 0; i < 4; ++i) {
-        char cpu_string[4];
-        sprintf(cpu_string, "cpu%d", i);
-        double cpu_usage = get_cpu_utilization(cpu_string);
-        double coverage = cpu_usage / cpu_rings[i].max;
+        double coverage = system_resources.cpu_perc[i] / cpu_rings[i].max;
         draw_ring(context, &cpu_rings[i], coverage);
     }
 }
