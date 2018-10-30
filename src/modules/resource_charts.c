@@ -27,7 +27,7 @@ void cpu_chart(cairo_t *context) {
     // Draw chart boundary decorations
     cairo_set_source_rgba(context, 1, 1, 1, 1);
     cairo_set_line_width(context, chart.line_width);
-    cairo_move_to(context, 270, 240);
+    cairo_move_to(context, 268, 240);
     cairo_line_to(context, 700, 240);
     cairo_stroke(context);
     cairo_arc(context, -135, 240, 425, -(1.0/24.0) * M_PI, (1.0/48.0) * M_PI);

@@ -8,6 +8,7 @@
 #include "modules/background.h"
 #include "modules/data_curves.h"
 #include "modules/resource_charts.h"
+#include "modules/date_time.h"
 
 typedef struct {
     int size_x;
@@ -21,11 +22,12 @@ Settings_t settings = {
     1
 };
 
-void (*call[4])(cairo_t*) = {
+void (*call[5])(cairo_t*) = {
     update_status,
     draw_background,
     draw_rings,
-    draw_charts
+    draw_charts,
+    date_time
 };
 
 #endif
