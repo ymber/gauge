@@ -24,7 +24,7 @@ void get_cpu_stats(char *cpuN, int *stats) {
     char *stat_line;
     FILE *fp = fopen("/proc/stat", "r");
     while (getline(&str, &len, fp) != -1) {
-        stat_line = malloc(strlen(str));
+        stat_line = malloc(strlen(str) + 1);
         strcpy(stat_line, str);
         token = strtok(str, " ");
         if (strcmp(token, cpuN) == 0) {
