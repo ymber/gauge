@@ -40,6 +40,11 @@ void update_cpu_data() {
     get_cpu_stats("cpu", core_avg_stats[clock]);
     system_resources.cpu_avg_perc = get_cpu_utilization(core_avg_stats[0], core_avg_stats[1]);
 
+    for(int i = 0; i < 59; ++i) {
+        system_resources.cpu_avg_perc_min[59 - i] = system_resources.cpu_avg_perc_min[59 - (i+1)];
+    }
+    system_resources.cpu_avg_perc_min[0] = system_resources.cpu_avg_perc;
+
     clock = !clock;
 }
 

@@ -21,9 +21,6 @@ void cpu_chart(cairo_t *context) {
         3
     };
 
-    static double points[60] = {0};
-    points[0] = system_resources.cpu_avg_perc;
-
     // Draw chart boundary decorations
     cairo_set_source_rgba(context, 1, 1, 1, 1);
     cairo_set_line_width(context, chart.line_width);
@@ -35,11 +32,7 @@ void cpu_chart(cairo_t *context) {
     cairo_arc(context, 160, 240, 425, -(1.0/24.0) * M_PI, (1.0/48.0) * M_PI);
     cairo_stroke(context);
 
-    line_chart(context, &chart, points, 1);
-    int max_index = chart.point_num - 1;
-    for(int i = 0; i < max_index; ++i) {
-        points[max_index - i] = points[max_index - (i+1)];
-    }
+    line_chart(context, &chart, system_resources.cpu_avg_perc_min, 1);
 }
 
 void draw_charts(cairo_t *context) {
