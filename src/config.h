@@ -22,8 +22,11 @@ Settings_t settings = {
     1
 };
 
-void (*call[5])(cairo_t*) = {
-    update_status,
+void (*daemon_fncs[1])() = {
+    update_status
+};
+
+void (*display_fncs[4])(cairo_t*) = {
     draw_background,
     draw_rings,
     draw_charts,

@@ -10,6 +10,6 @@ typedef struct {
 } Resource_Data_t;
 
 Resource_Data_t system_resources;
-void update_status(cairo_t *context);
+void update_status();
 
 #endif

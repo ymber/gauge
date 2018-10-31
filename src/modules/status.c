@@ -48,6 +48,6 @@ void update_cpu_data() {
     clock = !clock;
 }
 
-void update_status(cairo_t *context) {
+void update_status() {
     update_cpu_data();
 }

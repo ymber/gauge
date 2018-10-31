@@ -1,9 +1,10 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>
+
 #include <xcb/xcb.h>
 #include <cairo.h>
 #include <cairo-xcb.h>
-
-#include <stdio.h>
-#include <unistd.h>
 
 #include "overlay.h"
 #include "config.h"
@@ -48,27 +49,38 @@ Window create_window()
     return window_data;
 }
 
-int main()
-{
+void *overlay() {
     Window window = create_window();
-    cairo_surface_t *cairo_surface = cairo_xcb_surface_create(window.connection, window.drawable,
+    cairo_surface_t *surface = cairo_xcb_surface_create(window.connection, window.drawable,
                                      window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
-    cairo_t *cairo_context = cairo_create(cairo_surface);
+    cairo_t *context = cairo_create(surface);
 
-    for(int j = 0; j < 300; ++j) {
-        cairo_save(cairo_context);
-        cairo_set_operator(cairo_context, CAIRO_OPERATOR_CLEAR);
-        cairo_paint(cairo_context);
-        cairo_restore(cairo_context);
-        for(unsigned int i = 0; i < sizeof(call) / sizeof(call[0]); ++i) {
-            (*call[i])(cairo_context);
+    for(;;) {
+        cairo_save(context);
+        cairo_set_operator(context, CAIRO_OPERATOR_CLEAR);
+        cairo_paint(context);
+        cairo_restore(context);
+        for(unsigned int i = 0; i < sizeof(display_fncs) / sizeof(display_fncs[0]); ++i) {
+            (*display_fncs[i])(context);
         }
         xcb_flush(window.connection);
         sleep(1 / settings.frequency);
     }
-
-    cairo_destroy(cairo_context);
+    cairo_destroy(context);
     xcb_disconnect(window.connection);
+}
+
+int main()
+{
+    pthread_t display_thread;
+    pthread_create(&display_thread, NULL, overlay, NULL);
+    for(;;) {
+        for(unsigned int i = 0; i < sizeof(daemon_fncs) / sizeof(daemon_fncs[0]); ++i) {
+            (*daemon_fncs[i])();
+        }
+        
+        sleep(1 / settings.frequency);
+    }
 
     return 0;
 }
