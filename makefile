@@ -12,17 +12,20 @@ export OBJ_DIR=$(BUILD_DIR)/obj
 OBJECTS=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
 EXECUTABLE=overlay
 
-all: directories $(OBJECTS) $(EXECUTABLE)
+all: directories $(OBJECTS) modules $(EXECUTABLE)
 
 directories:
-	mkdir -p build/obj
+	mkdir $(BUILD_DIR)
+	mkdir $(OBJ_DIR)
 
 $(OBJECTS): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $< -o $@
+
+modules:
 	$(MAKE) -C src/modules
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(wildcard $(OBJ_DIR)/*.o) -o $(BUILD_DIR)/$(EXECUTABLE)
 
 clean:
-	rm -R build
+	rm -R $(BUILD_DIR)
