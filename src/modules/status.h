@@ -1,6 +1,8 @@
 #ifndef STATUS_H
 #define STATUS_H
 
+#include <pthread.h>
+
 #include <cairo.h>
 
 typedef struct {
@@ -9,7 +11,8 @@ typedef struct {
     double cpu_avg_perc_min[60];
 } Resource_Data_t;
 
-Resource_Data_t system_resources;
+extern pthread_mutex_t mutex_system_resources;
+extern Resource_Data_t system_resources;
 void update_status();
 
 #endif

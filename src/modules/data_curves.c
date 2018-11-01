@@ -97,7 +97,9 @@ void cpu_rings(cairo_t *context) {
         }
     };
     for (int i = 0; i < 4; ++i) {
+        pthread_mutex_lock(&mutex_system_resources);
         double coverage = system_resources.cpu_perc[i] / cpu_rings[i].max;
+        pthread_mutex_unlock(&mutex_system_resources);
         draw_ring(context, &cpu_rings[i], coverage);
     }
 

@@ -1,3 +1,5 @@
+#include <pthread.h>
+
 #include <cairo.h>
 
 #include "resource_charts.h"
@@ -32,7 +34,9 @@ void cpu_chart(cairo_t *context) {
     cairo_arc(context, 160, 240, 425, -(1.0/24.0) * M_PI, (1.0/48.0) * M_PI);
     cairo_stroke(context);
 
+    pthread_mutex_lock(&mutex_system_resources);
     line_chart(context, &chart, system_resources.cpu_avg_perc_min, 1);
+    pthread_mutex_unlock(&mutex_system_resources);
 }
 
 void draw_charts(cairo_t *context) {
