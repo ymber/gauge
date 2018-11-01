@@ -10,6 +10,7 @@
 Settings_t settings = {
     1024,
     768,
+    1,
     1
 };
 
