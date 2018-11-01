@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-Wextra -Werror -Wno-unused-parameter -O3 -c $(INCLUDES)
+CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
 
 INCLUDES=`pkg-config --cflags cairo`
 
