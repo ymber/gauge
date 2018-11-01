@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <time.h>
 
 #include <xcb/xcb.h>
 #include <cairo.h>
@@ -94,7 +95,7 @@ void *run_overlay() {
             (*display_fncs[i])(context);
         }
         xcb_flush(window.connection);
-        sleep(1 / settings.display_freq);
+        nanosleep(&settings.display_freq, NULL);
     }
     cairo_destroy(context);
     xcb_disconnect(window.connection);

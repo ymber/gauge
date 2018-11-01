@@ -10,8 +10,8 @@
 Settings_t settings = {
     1024,
     768,
-    1,
-    1
+    {1, 0},
+    {1, 0}
 };
 
 void (*daemon_fncs[1])() = {
