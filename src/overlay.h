@@ -11,4 +11,6 @@ typedef struct {
     xcb_visualtype_t *visual;
 } Window;
 
+void *run_overlay();
+
 #endif

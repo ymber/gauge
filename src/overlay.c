@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <pthread.h>
 
 #include <xcb/xcb.h>
 #include <cairo.h>
@@ -49,7 +48,7 @@ Window create_window()
     return window_data;
 }
 
-void *overlay() {
+void *run_overlay() {
     Window window = create_window();
     cairo_surface_t *surface = cairo_xcb_surface_create(window.connection, window.drawable,
                                      window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
@@ -64,23 +63,8 @@ void *overlay() {
             (*display_fncs[i])(context);
         }
         xcb_flush(window.connection);
-        sleep(1 / settings.frequency);
+        sleep(1 / settings.display_freq);
     }
     cairo_destroy(context);
     xcb_disconnect(window.connection);
-}
-
-int main()
-{
-    pthread_t display_thread;
-    pthread_create(&display_thread, NULL, overlay, NULL);
-    for(;;) {
-        for(unsigned int i = 0; i < sizeof(daemon_fncs) / sizeof(daemon_fncs[0]); ++i) {
-            (*daemon_fncs[i])();
-        }
-        
-        sleep(1 / settings.frequency);
-    }
-
-    return 0;
 }
