@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include <xcb/xcb.h>
 #include <cairo.h>
@@ -48,13 +49,43 @@ Window create_window()
     return window_data;
 }
 
+int display_active;
+
+void spawn_overlay() {
+    display_active = 1;
+    pthread_t display_thread;
+    pthread_create(&display_thread, NULL, run_overlay, NULL);
+}
+
+void setup_display_signals() {
+    struct sigaction stop_display;
+    stop_display.sa_handler = signal_overlay_off;
+    sigemptyset (&stop_display.sa_mask);
+    stop_display.sa_flags = 0;
+    sigaction(SIGUSR2, &stop_display, NULL);
+
+    // Display thread should not receive signal to spawn display thread
+    sigset_t sigusr1;
+    sigemptyset(&sigusr1);
+    sigaddset(&sigusr1, SIGUSR1);
+    pthread_sigmask(SIG_BLOCK, &sigusr1, NULL);
+
+    // Display thread must receive signal to close display
+    sigset_t sigusr2;
+    sigemptyset(&sigusr2);
+    sigaddset(&sigusr2, SIGUSR2);
+    pthread_sigmask(SIG_UNBLOCK, &sigusr2, NULL);
+}
+
 void *run_overlay() {
+    setup_display_signals();
+
     Window window = create_window();
     cairo_surface_t *surface = cairo_xcb_surface_create(window.connection, window.drawable,
                                      window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
     cairo_t *context = cairo_create(surface);
 
-    for(;;) {
+    while(display_active) {
         cairo_save(context);
         cairo_set_operator(context, CAIRO_OPERATOR_CLEAR);
         cairo_paint(context);
@@ -67,4 +98,9 @@ void *run_overlay() {
     }
     cairo_destroy(context);
     xcb_disconnect(window.connection);
+    return NULL;
+}
+
+void signal_overlay_off() {
+    display_active = 0;
 }

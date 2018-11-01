@@ -11,6 +11,11 @@ typedef struct {
     xcb_visualtype_t *visual;
 } Window;
 
+extern int display_active;
+
+void spawn_overlay();
+void setup_display_signals();
 void *run_overlay();
+void signal_overlay_off();
 
 #endif
