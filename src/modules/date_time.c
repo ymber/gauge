@@ -7,7 +7,7 @@
 #include "data.h"
 
 void date_time(cairo_t *context) {
-    static char *months[12] = {
+    static const char *months[12] = {
         "January",
         "February",
         "March",
@@ -23,7 +23,7 @@ void date_time(cairo_t *context) {
     };
 
     // Ordered as such because tm_wday begins from sunday
-    static char *days[7] = {
+    static const char *days[7] = {
         "Sunday",
         "Monday",
         "Tuesday",
