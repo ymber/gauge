@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 #include <cairo.h>
 
@@ -48,7 +49,7 @@ void date_time(cairo_t *context) {
     cairo_stroke (context);
 
     char *date_string;
-    date_string = malloc(snprintf(NULL, 0, "%s, %s %d %d", days[bd_time->tm_wday], months[bd_time->tm_mon], bd_time->tm_mday, bd_time->tm_year + 1900));
+    date_string = malloc(snprintf(NULL, 0, "%s, %s %d %d", days[bd_time->tm_wday], months[bd_time->tm_mon], bd_time->tm_mday, bd_time->tm_year + 1900) + 1);
     sprintf(date_string, "%s, %s %d %d", days[bd_time->tm_wday], months[bd_time->tm_mon], bd_time->tm_mday, bd_time->tm_year + 1900);
     x = 315;
     y = 310;
