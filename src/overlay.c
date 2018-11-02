@@ -53,9 +53,11 @@ Window create_window()
 int display_active;
 
 void spawn_overlay() {
-    display_active = 1;
-    pthread_t display_thread;
-    pthread_create(&display_thread, NULL, run_overlay, NULL);
+    if(!display_active) {
+        display_active = 1;
+        pthread_t display_thread;
+        pthread_create(&display_thread, NULL, run_overlay, NULL);
+    }
 }
 
 void setup_display_signals() {
@@ -71,7 +73,7 @@ void setup_display_signals() {
     sigaddset(&sigusr1, SIGUSR1);
     pthread_sigmask(SIG_BLOCK, &sigusr1, NULL);
 
-    // Display thread must receive signal to close display
+    // Display thread must receive signal to close display so nanosleep is interrupted if necessary
     sigset_t sigusr2;
     sigemptyset(&sigusr2);
     sigaddset(&sigusr2, SIGUSR2);
@@ -98,6 +100,7 @@ void *run_overlay() {
         nanosleep(&settings.display_freq, NULL);
     }
     cairo_destroy(context);
+    cairo_surface_destroy(surface);
     xcb_disconnect(window.connection);
     return NULL;
 }
