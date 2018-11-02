@@ -21,10 +21,12 @@ void get_cpu_stats(char *cpuN, int *stats) {
     char *str = NULL;
     size_t len = 0;
     char *token;
-    char *stat_line;
+    char *stat_line = NULL;
     FILE *fp = fopen("/proc/stat", "r");
     while (getline(&str, &len, fp) != -1) {
-        stat_line = malloc(strlen(str) + 1);
+        if(!stat_line) {
+            stat_line = malloc(strlen(str) + 1);
+        }
         strcpy(stat_line, str);
         token = strtok(str, " ");
         if (strcmp(token, cpuN) == 0) {
