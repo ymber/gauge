@@ -34,7 +34,7 @@ void date_time(cairo_t *context) {
         "Saturday"
     };
     struct tm *bd_time = get_time();
-    char hm[5];
+    char hm[6];
     sprintf(hm, "%02d:%02d", bd_time->tm_hour, bd_time->tm_min);
     double x;
     double y;
