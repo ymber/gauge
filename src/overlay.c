@@ -85,7 +85,7 @@ void *run_overlay() {
 
     Window window = create_window();
     cairo_surface_t *surface = cairo_xcb_surface_create(window.connection, window.drawable,
-                                     window.visual, window.screen->width_in_pixels, window.screen->height_in_pixels);
+                                     window.visual, settings.size_x, settings.size_y);
     cairo_t *context = cairo_create(surface);
 
     while(display_active) {
