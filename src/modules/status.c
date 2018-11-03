@@ -34,9 +34,10 @@ void update_cpu_data() {
     static bool clock = 0;
     static int stats[2][16][10] = {0};
     for(int i = 0; i < get_nprocs(); ++i) {
-        char cpu_string[5];
+        char *cpu_string = malloc(snprintf(NULL, 0, "cpu%d", i) + 1);
         sprintf(cpu_string, "cpu%d", i);
         get_cpu_stats(cpu_string, stats[clock][i]);
+        free(cpu_string);
         pthread_mutex_lock(&mutex_system_resources);
         system_resources.cpu_perc[i] = get_cpu_utilization(stats[0][i], stats[1][i]);
         pthread_mutex_unlock(&mutex_system_resources);
