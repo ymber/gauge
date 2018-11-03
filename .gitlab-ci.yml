@@ -1,0 +1,13 @@
+image: ubuntu
+
+stages:
+  - build
+
+clang-build:
+  stage: build
+  before_script:
+  - apt-get update
+  - apt-get install -y build-essential clang
+  - apt-get install -y libcairo2-dev
+  script:
+    - make
