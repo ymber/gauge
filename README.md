@@ -32,8 +32,8 @@ The `settings` structure contains all global configuration options for Gauge.
 
 * `size_x` specifies the width of Gauge's window.
 * `size_y` specifies the height of Gauge's window.
-* `daemon_freq` specifies in Hz the frequency at which the Gauge daemon executes its modules.
-* `display_freq` specifies in Hz the frequency at which Gauge redraws its window.
+* `daemon_freq` specifies the length in seconds and nanoseconds of the Gauge daemon's refresh period.
+* `display_freq` specifies the time between window redraws in seconds and nanoseconds.
 
 ### daemon_fncs
 
