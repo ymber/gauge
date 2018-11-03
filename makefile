@@ -1,6 +1,5 @@
 CC=clang
 CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
-LDFLAGS=$(LIBS)
 
 INCLUDES=`pkg-config --cflags xcb cairo`
 LIBS=`pkg-config --libs xcb cairo` -pthread
@@ -25,7 +24,7 @@ modules:
 	$(MAKE) -C src/modules
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(wildcard $(OBJ_DIR)/*.o) -o $(BUILD_DIR)/$(EXECUTABLE)
+	$(CC) $(wildcard $(OBJ_DIR)/*.o) -o $(BUILD_DIR)/$(EXECUTABLE) $(LIBS)
 
 clean:
 	rm -R $(BUILD_DIR)
