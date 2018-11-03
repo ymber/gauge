@@ -23,7 +23,7 @@ void get_cpu_stats(char *cpuN, int *stats) {
     char *token;
     char *stat_line = NULL;
     FILE *fp = fopen("/proc/stat", "r");
-    while (getline(&str, &len, fp) != -1) {
+    while(getline(&str, &len, fp) < 0) {
         if(!stat_line) {
             stat_line = malloc(strlen(str) + 1);
         }
@@ -62,12 +62,16 @@ double get_memory_usage() {
 
     int index = 0;
     for (int i = 0; i < 5; ++i) {
-        // Don't store MemAvailable line
+        // Don't store MemAvailable value
         if (i == 2) {
-            getline(&str, &len, fp);
+            if(getline(&str, &len, fp) < 0) {
+                fprintf(stderr, "error reading line\n");
+            }
             continue;
         }
-        getline(&str, &len, fp);
+        if(getline(&str, &len, fp) < 0) {
+                fprintf(stderr, "error reading line\n");
+        }
         strtok(str, " ");
         mem_vals[index] = strtol(strtok(NULL, " "), NULL, 10);
         ++index;
