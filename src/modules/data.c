@@ -23,7 +23,7 @@ void get_cpu_stats(char *cpuN, int *stats) {
     char *token;
     char *stat_line = NULL;
     FILE *fp = fopen("/proc/stat", "r");
-    while(getline(&str, &len, fp) < 0) {
+    while(getline(&str, &len, fp) > 0) {
         if(!stat_line) {
             stat_line = malloc(strlen(str) + 1);
         }
