@@ -2,8 +2,8 @@ CC=clang
 CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
 LDFLAGS=$(LIBS)
 
-INCLUDES=`pkg-config --cflags xcb` `pkg-config --cflags cairo`
-LIBS=`pkg-config --libs xcb` `pkg-config --libs cairo` -lpthread
+INCLUDES=`pkg-config --cflags xcb cairo`
+LIBS=`pkg-config --libs xcb cairo` -lpthread
 
 BUILD_DIR=$(abspath build)
 SRC_DIR=$(abspath src)
