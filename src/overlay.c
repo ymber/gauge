@@ -100,6 +100,7 @@ void *run_overlay() {
         nanosleep(&settings.display_freq, NULL);
     }
     cairo_destroy(context);
+    cairo_device_finish(cairo_surface_get_device(surface));
     cairo_surface_destroy(surface);
     xcb_disconnect(window.connection);
     return NULL;
