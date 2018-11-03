@@ -3,7 +3,7 @@ CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
 LDFLAGS=$(LIBS)
 
 INCLUDES=`pkg-config --cflags xcb cairo`
-LIBS=`pkg-config --libs xcb cairo` -lpthread
+LIBS=`pkg-config --libs xcb cairo` -pthread
 
 BUILD_DIR=build
 BUILD_PATH=$(abspath $(BUILD_DIR))
