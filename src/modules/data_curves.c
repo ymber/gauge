@@ -18,7 +18,6 @@ void (*ring_fncs[4])(cairo_t *context) = {
 
 void seconds_ring(cairo_t *context) {
     Data_Curve_t seconds_ring = {
-        60,
         {1, 1, 1, 0.3},
         {1, 1, 1, 0.6},
         160,
@@ -28,13 +27,12 @@ void seconds_ring(cairo_t *context) {
         -(M_PI/2),
         (3.0/2.0) * M_PI
     };
-    double coverage = get_time()->tm_sec / seconds_ring.max;
+    double coverage = get_time()->tm_sec / 60;
     draw_ring(context, &seconds_ring, coverage);
 }
 
 void memory_ring(cairo_t *context) {
     Data_Curve_t memory_ring = {
-        1,
         {1, 1, 1, 0.3},
         {1, 1, 1, 0.6},
         160,
@@ -45,14 +43,13 @@ void memory_ring(cairo_t *context) {
         (4.0/3.0) * M_PI
     };
     double mem_usage = get_memory_usage();
-    double coverage = mem_usage / memory_ring.max;
+    double coverage = mem_usage;
     draw_ring(context, &memory_ring, coverage);
 }
 
 void cpu_rings(cairo_t *context) {
     Data_Curve_t cpu_rings[4] = {
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,
@@ -63,7 +60,6 @@ void cpu_rings(cairo_t *context) {
             (2.0/3.0) * M_PI
         },
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,
@@ -74,7 +70,6 @@ void cpu_rings(cairo_t *context) {
             (2.0/3.0) * M_PI
         },
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,
@@ -85,7 +80,6 @@ void cpu_rings(cairo_t *context) {
             (2.0/3.0) * M_PI
         },
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,
@@ -98,7 +92,7 @@ void cpu_rings(cairo_t *context) {
     };
     for (int i = 0; i < 4; ++i) {
         pthread_mutex_lock(&mutex_system_resources);
-        double coverage = system_resources.cpu_perc[i] / cpu_rings[i].max;
+        double coverage = system_resources.cpu_perc[i];
         pthread_mutex_unlock(&mutex_system_resources);
         draw_ring(context, &cpu_rings[i], coverage);
     }
@@ -108,7 +102,6 @@ void cpu_rings(cairo_t *context) {
 void disk_usage_rings(cairo_t *context) {
     Data_Curve_t disk_rings[2] = {
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,
@@ -119,7 +112,6 @@ void disk_usage_rings(cairo_t *context) {
             (1.0/6.0) * M_PI
         },
         {
-            1,
             {1, 1, 1, 0.3},
             {1, 1, 1, 0.6},
             160,

@@ -24,7 +24,6 @@ typedef struct {
 } Line_Chart_t;
 
 typedef struct {
-    double max;
     RGBA_t bg_rgba;
     RGBA_t fg_rgba;
     int x;
