@@ -1,30 +1,46 @@
-CC=clang
-CFLAGS=-Wextra -Werror -O3 -c $(INCLUDES)
+VPATH=src src/modules
 
+CC=clang
 INCLUDES=`pkg-config --cflags xcb cairo`
 LIBS=`pkg-config --libs xcb cairo` -pthread
+CFLAGS=-Wextra -Werror -c $(INCLUDES)
 
 BUILD_DIR=$(abspath build)
-SRC_DIR=$(abspath src)
-SOURCES=$(wildcard $(SRC_DIR)/*.c)
-export OBJ_DIR=$(BUILD_DIR)/obj
-OBJECTS=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
+SOURCES=$(notdir $(foreach dir,$(VPATH),$(wildcard $(dir)/*.c)))
+OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 EXECUTABLE=overlay
 
-all: directories $(OBJECTS) modules $(EXECUTABLE)
+DBG_BUILD_DIR=$(BUILD_DIR)/debug
+DBG_OBJECTS=$(addprefix $(DBG_BUILD_DIR)/obj/, $(OBJECTS))
+DBG_EXECUTABLE=$(DBG_BUILD_DIR)/$(EXECUTABLE)
+DBG_CFLAGS=-g -O0
+
+REL_BUILD_DIR=$(BUILD_DIR)/release
+REL_OBJECTS=$(addprefix $(REL_BUILD_DIR)/obj/, $(OBJECTS))
+REL_EXECUTABLE=$(REL_BUILD_DIR)/$(EXECUTABLE)
+REL_CFLAGS=-O3
+
+debug: directories $(DBG_OBJECTS) $(DBG_EXECUTABLE)
+release: directories $(REL_OBJECTS) $(REL_EXECUTABLE)
 
 directories:
-	mkdir $(BUILD_DIR)
-	mkdir $(OBJ_DIR)
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(DBG_BUILD_DIR)
+	mkdir -p $(DBG_BUILD_DIR)/obj
+	mkdir -p $(REL_BUILD_DIR)
+	mkdir -p $(REL_BUILD_DIR)/obj
 
-$(OBJECTS): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $< -o $@
+$(DBG_OBJECTS): $(DBG_BUILD_DIR)/obj/%.o: %.c
+	$(CC) $(CFLAGS) $(DBG_CFLAGS) $< -o $@
 
-modules:
-	$(MAKE) -C src/modules
+$(DBG_EXECUTABLE): $(DBG_OBJECTS)
+	$(CC) $(wildcard $(DBG_BUILD_DIR)/obj/*.o) -o $(DBG_EXECUTABLE) $(LIBS)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(wildcard $(OBJ_DIR)/*.o) -o $(BUILD_DIR)/$(EXECUTABLE) $(LIBS)
+$(REL_OBJECTS): $(REL_BUILD_DIR)/obj/%.o: %.c
+	$(CC) $(CFLAGS) $(REL_CFLAGS) $< -o $@
+
+$(REL_EXECUTABLE): $(REL_OBJECTS)
+	$(CC) $(wildcard $(REL_BUILD_DIR)/obj/*.o) -o $(REL_EXECUTABLE) $(LIBS)
 
 clean:
-	rm -R $(BUILD_DIR)
+	rm -Rf $(BUILD_DIR)
