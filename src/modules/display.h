@@ -40,7 +40,7 @@ typedef struct
     double end_angle;
 } data_arc_t;
 
-void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse);
+void draw_line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse);
 void draw_ring(cairo_t *context, data_arc_t *arc, double coverage);
 
 #endif

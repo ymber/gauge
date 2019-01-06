@@ -4,7 +4,7 @@
 
 #include "display.h"
 
-void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse)
+void draw_line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse)
 {
     cairo_set_source_rgba(context, chart->rgba.r, chart->rgba.g, chart->rgba.b, chart->rgba.a);
     cairo_set_line_width(context, chart->thickness);
