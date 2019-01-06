@@ -14,6 +14,6 @@ typedef struct {
 
 extern Settings_t settings;
 extern void (*daemon_fncs[1])();
-extern void (*display_fncs[4])(cairo_t*);
+extern void (*display_fncs[1])(cairo_t*);
 
 #endif
