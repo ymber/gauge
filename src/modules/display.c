@@ -4,25 +4,33 @@
 
 #include "display.h"
 
-void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse) {
+void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse)
+{
     cairo_set_source_rgba(context, chart->rgba.r, chart->rgba.g, chart->rgba.b, chart->rgba.a);
     cairo_set_line_width(context, chart->thickness);
     int point_distance = chart->width / chart->data_count;
-    for (int i = 0; i < chart->data_count; ++i) {
+    for (int i = 0; i < chart->data_count; ++i)
+    {
         int point_height = chart->y - (point_set[i] * (chart->height / chart->max));
-        if (!reverse) {
-            if (i == 0) {
+        if (!reverse)
+        {
+            if (i == 0)
+            {
                 cairo_move_to(context, chart->x + i * point_distance, point_height);
             }
-            else {
+            else
+            {
                 cairo_line_to(context, chart->x + i * point_distance, point_height);
             }
         }
-        else {
-            if (i == 0) {
+        else
+        {
+            if (i == 0)
+            {
                 cairo_move_to(context, (chart->x + chart->width) - i * point_distance, point_height);
             }
-            else {
+            else
+            {
                 cairo_line_to(context, (chart->x + chart->width) - i * point_distance, point_height);
             }
         }
