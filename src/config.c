@@ -65,7 +65,7 @@ int get_check_string(char **dest, cJSON *json)
     *dest = malloc(strlen(json->valuestring) + 1);
     if (*dest == NULL)
     {
-        fprintf(stderr, "error allocating memory for data string");
+        fprintf(stderr, "error allocating memory for data string\n");
         return 1;
     }
     strcpy(*dest, json->valuestring);
@@ -123,7 +123,7 @@ int read_config(char *config_file)
 
 void destroy_data_arc(struct drawable *arc) {
     if (arc->type != data_arc) {
-        fprintf(stderr, "unknown object passed to destroy_data_arc");
+        fprintf(stderr, "unknown object passed to destroy_data_arc\n");
         return;
     }
     free(arc->data_arc.data);
@@ -132,7 +132,7 @@ void destroy_data_arc(struct drawable *arc) {
 
 void destroy_line_chart(struct drawable *chart) {
     if (chart->type != line_chart) {
-        fprintf(stderr, "unknown object passed to destroy_line_chart");
+        fprintf(stderr, "unknown object passed to destroy_line_chart\n");
         return;
     }
     free(chart->line_chart.data);
