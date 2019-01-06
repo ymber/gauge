@@ -121,8 +121,10 @@ int read_config(char *config_file)
     return 0;
 }
 
-void destroy_data_arc(struct drawable *arc) {
-    if (arc->type != data_arc) {
+void destroy_data_arc(struct drawable *arc)
+{
+    if (arc->type != data_arc)
+    {
         fprintf(stderr, "unknown object passed to destroy_data_arc\n");
         return;
     }
@@ -130,13 +132,175 @@ void destroy_data_arc(struct drawable *arc) {
     free(arc);
 }
 
-void destroy_line_chart(struct drawable *chart) {
-    if (chart->type != line_chart) {
+void destroy_line_chart(struct drawable *chart)
+{
+    if (chart->type != line_chart)
+    {
         fprintf(stderr, "unknown object passed to destroy_line_chart\n");
         return;
     }
     free(chart->line_chart.data);
     free(chart);
+}
+
+int read_data_arc(cJSON *item, struct drawable *arc)
+{
+    if (get_check_string(&arc->data_arc.data, cJSON_GetObjectItem(item, "data")))
+    {
+        return 1;
+    }
+
+    cJSON *max_json = cJSON_GetObjectItem(item, "max");
+    if (check_error(max_json))
+    {
+        return 1;
+    }
+    arc->data_arc.max = max_json->valueint;
+
+    cJSON *bg_rgba_json = cJSON_GetObjectItem(item, "bg_rgba");
+    if (check_error(bg_rgba_json))
+    {
+        return 1;
+    }
+    if (cJSON_GetArraySize(bg_rgba_json) != 4)
+    {
+        return 1;
+    }
+    arc->data_arc.bg_rgba.r = cJSON_GetArrayItem(bg_rgba_json, 0)->valuedouble;
+    arc->data_arc.bg_rgba.g = cJSON_GetArrayItem(bg_rgba_json, 1)->valuedouble;
+    arc->data_arc.bg_rgba.b = cJSON_GetArrayItem(bg_rgba_json, 2)->valuedouble;
+    arc->data_arc.bg_rgba.a = cJSON_GetArrayItem(bg_rgba_json, 3)->valuedouble;
+
+    cJSON *fg_rgba_json = cJSON_GetObjectItem(item, "fg_rgba");
+    if (check_error(fg_rgba_json))
+    {
+        return 1;
+    }
+    if (cJSON_GetArraySize(fg_rgba_json) != 4)
+    {
+        return 1;
+    }
+    arc->data_arc.fg_rgba.r = cJSON_GetArrayItem(fg_rgba_json, 0)->valuedouble;
+    arc->data_arc.fg_rgba.g = cJSON_GetArrayItem(fg_rgba_json, 1)->valuedouble;
+    arc->data_arc.fg_rgba.b = cJSON_GetArrayItem(fg_rgba_json, 2)->valuedouble;
+    arc->data_arc.fg_rgba.a = cJSON_GetArrayItem(fg_rgba_json, 3)->valuedouble;
+
+    cJSON *thickness_json = cJSON_GetObjectItem(item, "thickness");
+    if (check_error(thickness_json))
+    {
+        return 1;
+    }
+    arc->data_arc.thickness = thickness_json->valueint;
+
+    cJSON *x_center_json = cJSON_GetObjectItem(item, "x");
+    if (check_error(x_center_json))
+    {
+        return 1;
+    }
+    arc->data_arc.x = x_center_json->valueint;
+
+    cJSON *y_center_json = cJSON_GetObjectItem(item, "y");
+    if (check_error(y_center_json))
+    {
+        return 1;
+    }
+    arc->data_arc.y = y_center_json->valueint;
+
+    cJSON *radius_json = cJSON_GetObjectItem(item, "radius");
+    if (check_error(radius_json))
+    {
+        return 1;
+    }
+    arc->data_arc.radius = radius_json->valueint;
+
+    cJSON *start_angle_json = cJSON_GetObjectItem(item, "start_angle");
+    if (check_error(start_angle_json))
+    {
+        return 1;
+    }
+    arc->data_arc.start_angle = start_angle_json->valuedouble;
+
+    cJSON *end_angle_json = cJSON_GetObjectItem(item, "end_angle");
+    if (check_error(end_angle_json))
+    {
+        return 1;
+    }
+    arc->data_arc.end_angle = end_angle_json->valuedouble;
+
+    return 0;
+}
+
+int read_line_chart(cJSON *item, struct drawable *chart)
+{
+    if (get_check_string(&chart->line_chart.data, cJSON_GetObjectItem(item, "data")))
+    {
+        return 1;
+    }
+
+    cJSON *max_json = cJSON_GetObjectItem(item, "max");
+    if (check_error(max_json))
+    {
+        return 1;
+    }
+    chart->line_chart.max = max_json->valueint;
+
+    cJSON *rgba_json = cJSON_GetObjectItem(item, "rgba");
+    if (check_error(rgba_json))
+    {
+        return 1;
+    }
+    if (cJSON_GetArraySize(rgba_json) != 4)
+    {
+        return 1;
+    }
+    chart->line_chart.rgba.r = cJSON_GetArrayItem(rgba_json, 0)->valuedouble;
+    chart->line_chart.rgba.g = cJSON_GetArrayItem(rgba_json, 1)->valuedouble;
+    chart->line_chart.rgba.b = cJSON_GetArrayItem(rgba_json, 2)->valuedouble;
+    chart->line_chart.rgba.a = cJSON_GetArrayItem(rgba_json, 3)->valuedouble;
+
+    cJSON *thickness_json = cJSON_GetObjectItem(item, "thickness");
+    if (check_error(thickness_json))
+    {
+        return 1;
+    }
+    chart->line_chart.thickness = thickness_json->valueint;
+
+    cJSON *x_json = cJSON_GetObjectItem(item, "x");
+    if (check_error(x_json))
+    {
+        return 1;
+    }
+    chart->line_chart.x = x_json->valueint;
+
+    cJSON *y_json = cJSON_GetObjectItem(item, "y");
+    if (check_error(y_json))
+    {
+        return 1;
+    }
+    chart->line_chart.y = y_json->valueint;
+
+    cJSON *width_json = cJSON_GetObjectItem(item, "width");
+    if (check_error(width_json))
+    {
+        return 1;
+    }
+    chart->line_chart.width = width_json->valueint;
+
+    cJSON *height_json = cJSON_GetObjectItem(item, "height");
+    if (check_error(height_json))
+    {
+        return 1;
+    }
+    chart->line_chart.height = height_json->valueint;
+
+    cJSON *data_count_json = cJSON_GetObjectItem(item, "data_count");
+    if (check_error(data_count_json))
+    {
+        return 1;
+    }
+    chart->line_chart.data_count = data_count_json->valueint;
+
+    return 0;
 }
 
 vector_t *drawables;
@@ -170,100 +334,11 @@ int read_drawables(char *config_file)
                 {
                     struct drawable *arc = malloc(sizeof(struct drawable));
                     arc->type = data_arc;
-
-                    if (get_check_string(&arc->data_arc.data, cJSON_GetObjectItem(item, "data")))
+                    if (read_data_arc(item, arc))
                     {
                         destroy_data_arc(arc);
                         continue;
                     }
-
-                    cJSON *max_json = cJSON_GetObjectItem(item, "max");
-                    if (check_error(max_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.max = max_json->valueint;
-
-                    cJSON *bg_rgba_json = cJSON_GetObjectItem(item, "bg_rgba");
-                    if (check_error(bg_rgba_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    if (cJSON_GetArraySize(bg_rgba_json) != 4)
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.bg_rgba.r = cJSON_GetArrayItem(bg_rgba_json, 0)->valuedouble;
-                    arc->data_arc.bg_rgba.g = cJSON_GetArrayItem(bg_rgba_json, 1)->valuedouble;
-                    arc->data_arc.bg_rgba.b = cJSON_GetArrayItem(bg_rgba_json, 2)->valuedouble;
-                    arc->data_arc.bg_rgba.a = cJSON_GetArrayItem(bg_rgba_json, 3)->valuedouble;
-
-                    cJSON *fg_rgba_json = cJSON_GetObjectItem(item, "fg_rgba");
-                    if (check_error(fg_rgba_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    if (cJSON_GetArraySize(fg_rgba_json) != 4)
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.fg_rgba.r = cJSON_GetArrayItem(fg_rgba_json, 0)->valuedouble;
-                    arc->data_arc.fg_rgba.g = cJSON_GetArrayItem(fg_rgba_json, 1)->valuedouble;
-                    arc->data_arc.fg_rgba.b = cJSON_GetArrayItem(fg_rgba_json, 2)->valuedouble;
-                    arc->data_arc.fg_rgba.a = cJSON_GetArrayItem(fg_rgba_json, 3)->valuedouble;
-
-                    cJSON *thickness_json = cJSON_GetObjectItem(item, "thickness");
-                    if (check_error(thickness_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.thickness = thickness_json->valueint;
-
-                    cJSON *x_center_json = cJSON_GetObjectItem(item, "x");
-                    if (check_error(x_center_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.x = x_center_json->valueint;
-
-                    cJSON *y_center_json = cJSON_GetObjectItem(item, "y");
-                    if (check_error(y_center_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.y = y_center_json->valueint;
-
-                    cJSON *radius_json = cJSON_GetObjectItem(item, "radius");
-                    if (check_error(radius_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.radius = radius_json->valueint;
-
-                    cJSON *start_angle_json = cJSON_GetObjectItem(item, "start_angle");
-                    if (check_error(start_angle_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.start_angle = start_angle_json->valuedouble;
-
-                    cJSON *end_angle_json = cJSON_GetObjectItem(item, "end_angle");
-                    if (check_error(end_angle_json))
-                    {
-                        destroy_data_arc(arc);
-                        continue;
-                    }
-                    arc->data_arc.end_angle = end_angle_json->valuedouble;
 
                     vector_push_back(drawables, arc);
                 }
@@ -271,83 +346,11 @@ int read_drawables(char *config_file)
                 {
                     struct drawable *chart = malloc(sizeof(struct drawable));
                     chart->type = line_chart;
-                    if (get_check_string(&chart->line_chart.data, cJSON_GetObjectItem(item, "data")))
+                    if (read_line_chart(item, chart))
                     {
                         destroy_line_chart(chart);
                         continue;
                     }
-
-                    cJSON *max_json = cJSON_GetObjectItem(item, "max");
-                    if (check_error(max_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.max = max_json->valueint;
-
-                    cJSON *rgba_json = cJSON_GetObjectItem(item, "rgba");
-                    if (check_error(rgba_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    if (cJSON_GetArraySize(rgba_json) != 4)
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.rgba.r = cJSON_GetArrayItem(rgba_json, 0)->valuedouble;
-                    chart->line_chart.rgba.g = cJSON_GetArrayItem(rgba_json, 1)->valuedouble;
-                    chart->line_chart.rgba.b = cJSON_GetArrayItem(rgba_json, 2)->valuedouble;
-                    chart->line_chart.rgba.a = cJSON_GetArrayItem(rgba_json, 3)->valuedouble;
-
-                    cJSON *thickness_json = cJSON_GetObjectItem(item, "thickness");
-                    if (check_error(thickness_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.thickness = thickness_json->valueint;
-
-                    cJSON *x_json = cJSON_GetObjectItem(item, "x");
-                    if (check_error(x_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.x = x_json->valueint;
-
-                    cJSON *y_json = cJSON_GetObjectItem(item, "y");
-                    if (check_error(y_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.y = y_json->valueint;
-
-                    cJSON *width_json = cJSON_GetObjectItem(item, "width");
-                    if (check_error(width_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.width = width_json->valueint;
-
-                    cJSON *height_json = cJSON_GetObjectItem(item, "height");
-                    if (check_error(height_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.height = height_json->valueint;
-
-                    cJSON *data_count_json = cJSON_GetObjectItem(item, "data_count");
-                    if (check_error(data_count_json))
-                    {
-                        destroy_line_chart(chart);
-                        continue;
-                    }
-                    chart->line_chart.data_count = data_count_json->valueint;
 
                     vector_push_back(drawables, chart);
                 }
@@ -359,12 +362,16 @@ int read_drawables(char *config_file)
     return 0;
 }
 
-void clear_drawables() {
-    for (unsigned int i = 0; i < drawables->count; ++i) {
-        if (((struct drawable *)drawables->data[i])->type == data_arc) {
+void clear_drawables()
+{
+    for (unsigned int i = 0; i < drawables->count; ++i)
+    {
+        if (((struct drawable *)drawables->data[i])->type == data_arc)
+        {
             destroy_data_arc(drawables->data[i]);
         }
-        else if (((struct drawable *)drawables->data[i])->type == line_chart) {
+        else if (((struct drawable *)drawables->data[i])->type == line_chart)
+        {
             destroy_line_chart(drawables->data[i]);
         }
     }
