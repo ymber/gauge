@@ -4,33 +4,33 @@
 
 #include "display.h"
 
-void line_chart(cairo_t *context, Line_Chart_t *chart, double *point_set, int reverse) {
+void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse) {
     cairo_set_source_rgba(context, chart->rgba.r, chart->rgba.g, chart->rgba.b, chart->rgba.a);
-    cairo_set_line_width(context, chart->line_width);
-    int point_distance = chart->x / chart->point_num;
-    for (int i = 0; i < chart->point_num; ++i) {
-        int point_height = chart->start_y - (point_set[i] * (chart->y / chart->max));
+    cairo_set_line_width(context, chart->thickness);
+    int point_distance = chart->width / chart->data_count;
+    for (int i = 0; i < chart->data_count; ++i) {
+        int point_height = chart->y - (point_set[i] * (chart->height / chart->max));
         if (!reverse) {
             if (i == 0) {
-                cairo_move_to(context, chart->start_x + i * point_distance, point_height);
+                cairo_move_to(context, chart->x + i * point_distance, point_height);
             }
             else {
-                cairo_line_to(context, chart->start_x + i * point_distance, point_height);
+                cairo_line_to(context, chart->x + i * point_distance, point_height);
             }
         }
         else {
             if (i == 0) {
-                cairo_move_to(context, (chart->start_x + chart->x) - i * point_distance, point_height);
+                cairo_move_to(context, (chart->x + chart->width) - i * point_distance, point_height);
             }
             else {
-                cairo_line_to(context, (chart->start_x + chart->x) - i * point_distance, point_height);
+                cairo_line_to(context, (chart->x + chart->width) - i * point_distance, point_height);
             }
         }
     }
     cairo_stroke(context);
 }
 
-void draw_ring(cairo_t *context, Data_Curve_t *arc, double coverage)
+void draw_ring(cairo_t *context, data_arc_t *arc, double coverage)
 {
     double filled_arc_length = (arc->end_angle - arc->start_angle) * coverage;
 

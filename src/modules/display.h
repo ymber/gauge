@@ -10,31 +10,36 @@ typedef struct {
     double g;
     double b;
     double a;
-} RGBA_t;
+} rgba_t;
 
-typedef struct {
+typedef struct
+{
+    char *data;
     double max;
+    rgba_t rgba;
+    int thickness;
     int x;
     int y;
-    int start_x;
-    int start_y;
-    int point_num;
-    RGBA_t rgba;
-    int line_width;
-} Line_Chart_t;
+    int width;
+    int height;
+    int data_count;
+} line_chart_t;
 
-typedef struct {
-    RGBA_t bg_rgba;
-    RGBA_t fg_rgba;
+typedef struct
+{
+    char *data;
+    double max;
+    rgba_t bg_rgba;
+    rgba_t fg_rgba;
+    int thickness;
     int x;
     int y;
     int radius;
-    int thickness;
     double start_angle;
     double end_angle;
-} Data_Curve_t;
+} data_arc_t;
 
-void line_chart(cairo_t *context, Line_Chart_t *chart, double *point_set, int reverse);
-void draw_ring(cairo_t *context, Data_Curve_t *arc, double coverage);
+void line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse);
+void draw_ring(cairo_t *context, data_arc_t *arc, double coverage);
 
 #endif
