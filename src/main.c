@@ -21,6 +21,7 @@ void setup_main_signals() {
 
 int main()
 {
+    read_config("/home/matthew/git/gauge/config.json");
     setup_main_signals();
 
     pthread_t daemon_thread;

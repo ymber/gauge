@@ -2,7 +2,7 @@ VPATH=src src/modules
 
 CC=clang
 INCLUDES=`pkg-config --cflags xcb cairo`
-LIBS=`pkg-config --libs xcb cairo` -pthread
+LIBS=`pkg-config --libs xcb cairo` -pthread -lcjson
 CFLAGS=-Wextra -Werror -c $(INCLUDES)
 
 BUILD_DIR=$(abspath build)

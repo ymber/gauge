@@ -5,15 +5,18 @@
 
 #include <cairo.h>
 
-typedef struct {
+struct config
+{
     int size_x;
     int size_y;
     struct timespec daemon_freq;
     struct timespec display_freq;
-} Settings_t;
+};
 
-extern Settings_t settings;
+extern struct config settings;
 extern void (*daemon_fncs[1])();
-extern void (*display_fncs[1])(cairo_t*);
+extern void (*display_fncs[1])(cairo_t *);
+
+int read_config(char *config_file);
 
 #endif
