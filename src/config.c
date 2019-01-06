@@ -72,6 +72,22 @@ int get_check_string(char **dest, cJSON *json)
     return 0;
 }
 
+char *get_config_file()
+{
+    char *config_file = NULL;
+    if (getenv("XDG_CONFIG_HOME"))
+    {
+        config_file = malloc(snprintf(NULL, 0, "%s%s", getenv("XDG_CONFIG_HOME"), "/gauge/config.json") + 1);
+        sprintf(config_file, "%s%s", getenv("XDG_CONFIG_HOME"), "/gauge/config.json");
+    }
+    else
+    {
+        config_file = malloc(snprintf(NULL, 0, "%s%s", getenv("HOME"), "/.config/gauge/config.json") + 1);
+        sprintf(config_file, "%s%s", getenv("HOME"), "/.config/gauge/config.json");
+    }
+    return config_file;
+}
+
 struct config settings;
 
 int read_config(char *config_file)

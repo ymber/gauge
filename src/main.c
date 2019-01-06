@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include <pthread.h>
 #include <signal.h>
 
@@ -5,10 +7,11 @@
 #include "daemon.h"
 #include "overlay.h"
 
-void setup_main_signals() {
+void setup_main_signals()
+{
     struct sigaction start_display;
     start_display.sa_handler = spawn_overlay;
-    sigemptyset (&start_display.sa_mask);
+    sigemptyset(&start_display.sa_mask);
     start_display.sa_flags = 0;
     sigaction(SIGUSR1, &start_display, NULL);
 
@@ -21,8 +24,16 @@ void setup_main_signals() {
 
 int main()
 {
-    read_config("/home/matthew/git/gauge/config.json");
-    read_drawables("/home/matthew/git/gauge/config.json");
+    char *config_file = get_config_file();
+    if (read_config(config_file))
+    {
+        free(config_file);
+        fprintf(stderr, "no readable config found\n");
+        return 1;
+    }
+    read_drawables(config_file);
+    free(config_file);
+
     setup_main_signals();
 
     pthread_t daemon_thread;
