@@ -40,6 +40,20 @@ typedef struct
     double end_angle;
 } data_arc_t;
 
+enum drawable_type
+{
+    data_arc,
+    line_chart
+};
+struct drawable
+{
+    enum drawable_type type;
+    union {
+        data_arc_t data_arc;
+        line_chart_t line_chart;
+    };
+};
+
 void draw_line_chart(cairo_t *context, line_chart_t *chart, double *point_set, int reverse);
 void draw_ring(cairo_t *context, data_arc_t *arc, double coverage);
 

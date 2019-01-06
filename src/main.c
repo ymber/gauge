@@ -22,11 +22,14 @@ void setup_main_signals() {
 int main()
 {
     read_config("/home/matthew/git/gauge/config.json");
+    read_drawables("/home/matthew/git/gauge/config.json");
     setup_main_signals();
 
     pthread_t daemon_thread;
     pthread_create(&daemon_thread, NULL, run_daemon, NULL);
     pthread_join(daemon_thread, NULL);
+
+    clear_drawables();
 
     return 0;
 }
