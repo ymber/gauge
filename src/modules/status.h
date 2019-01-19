@@ -3,6 +3,8 @@
 
 #include <pthread.h>
 
+#include <cairo.h>
+
 typedef struct {
     double cpu_perc[16];
     double cpu_avg_perc;

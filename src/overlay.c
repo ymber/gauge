@@ -1,8 +1,7 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <signal.h>
 #include <time.h>
-#include <bits/stdint-uintn.h>
-#include <pthread.h>
 
 #include <xcb/xcb.h>
 #include <cairo.h>
