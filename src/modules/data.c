@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
+#include <bits/types/time_t.h>
 
-#include <sys/vfs.h>
+#include <sys/statfs.h>
 
 struct tm *get_time()
 {

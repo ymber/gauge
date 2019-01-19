@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <time.h>
+#include <bits/types/struct_timespec.h>
 
 #include <cairo.h>
 #include <cdynarr/cdynarr.h>

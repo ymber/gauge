@@ -1,8 +1,8 @@
 #ifndef OVERLAY_H
 #define OVERLAY_H
 
+#include <xcb/xproto.h>
 #include <xcb/xcb.h>
-#include <cairo.h>
 
 typedef struct {
     xcb_connection_t *connection;
